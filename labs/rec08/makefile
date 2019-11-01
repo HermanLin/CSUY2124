@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+FLAGS = -Wall -std=c++14
+
+all:
+
+clear:
+=======
 FLAGS = -Wall -std=c++11
 
 all: testRational rec08
@@ -10,3 +17,4 @@ rec08: rec08.cpp Rational.cpp Rational.h
 
 clear:
 	rm -f testRational rec08
+>>>>>>> 6adf87ace822d5d7f2a12938fb9ba81900a18c9f
