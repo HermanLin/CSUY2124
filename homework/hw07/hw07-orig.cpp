@@ -8,7 +8,52 @@
 #include <vector>
 using namespace std;
 
+class Nobles {
+public:
+    // virtual bool hire(Protectors& mercenary) = 0;
+private:
+    string name;
+    bool dead;
+};
 
+class Lord : public Nobles {
+public:
+private:
+    vector<Protectors*> army;
+};
+
+class PersonWithStrengthToFight : public Nobles {
+public:
+private:
+    double strength;
+};
+
+class Protectors {
+public:
+private:
+    double strength;
+    Nobles* boss;
+};
+
+class Wizards : public Protectors {
+public:
+private:
+};
+
+class Warriors : public Protectors {
+public:
+private:
+};
+
+class Archer : public Warriors {
+public:
+private:
+};
+
+class Swordsman : public Warriors {
+public:
+private:
+};
 
 int main() {
     // Lord sam("Sam");
