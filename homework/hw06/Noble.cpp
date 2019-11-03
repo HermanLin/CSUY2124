@@ -80,7 +80,7 @@ namespace WarriorCraft {
             }
             //if this is dead...
             else if (dead) {
-                cout << "Hes'd dead, " << opponent.getName() << endl;
+                cout << "He's dead, " << opponent.getName() << endl;
             }
             //if the opponent is dead...
             else {
