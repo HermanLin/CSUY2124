@@ -135,4 +135,76 @@ int main() {
     // joe.battle(barclay);
 }
 
-//Nobles::Nobles (const string& name) : name(name) {}
+//============================//
+/* NOBLES CLASS FUNCTIONALITY */
+//============================//
+Nobles::Nobles (const string& name)
+    : name(name), dead(false)
+{}
+
+bool Nobles::isDead() const { return dead; }
+
+//==========================//
+/* LORD CLASS FUNCTIONALITY */
+//==========================//
+Lord::Lord (const string& name)
+    : Nobles(name)
+{}
+
+bool Lord::hires(Protectors& mercenary) {
+    // if the Noble is deadd...
+    if (isDead()) { return false; }
+    // if the Protector already has a boss...
+    else if (mercenary.getBoss()) { return false; }
+    else {
+        mercenary.setBoss(this);
+        army.push_back(&mercenary);
+        return true;
+    }
+}
+
+//===============================================//
+/* PERSONWITHSTRENGTHTOFIGHT CLASS FUNCTIONALITY */
+//===============================================//
+PersonWithStrengthToFight::PersonWithStrengthToFight (const string& name, const double strength)
+    : Nobles(name), strength(strength)
+{}
+
+//================================//
+/* PROTECTORS CLASS FUNCTIONALITY */
+//================================//
+Protectors::Protectors (const string& name, const double strength)
+    : name(name), strength(strength)
+{}
+
+Nobles* Protectors::getBoss() const { return boss; }
+
+void Protectors::setBoss(Nobles* newBoss) { boss = newBoss; }
+
+//============================//
+/* WIZARD CLASS FUNCTIONALITY */
+//============================//
+Wizard::Wizard (const string& name, const double strength)
+    : Protectors(name, strength)
+{}
+
+//==============================//
+/* WARRIORS CLASS FUNCTIONALITY */
+//==============================//
+Warriors::Warriors (const string& name, const double strength)
+    : Protectors(name, strength)
+{}
+
+//============================//
+/* ARCHER CLASS FUNCTIONALITY */
+//============================//
+Archer::Archer (const string& name, const double strength)
+    : Warriors(name, strength)
+{}
+
+//===============================//
+/* SWORDSMAN CLASS FUNCTIONALITY */
+//===============================//
+Swordsman::Swordsman (const string& name, const double strength)
+    : Warriors(name, strength)
+{}
