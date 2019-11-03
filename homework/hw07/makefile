@@ -5,5 +5,5 @@ all: hw07
 hw07:
 	g++ ${FLAGS} -o hw07 hw07.cpp
 
-clear:
+clean:
 	rm -f hw07
