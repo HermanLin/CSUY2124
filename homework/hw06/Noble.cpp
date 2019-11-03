@@ -96,8 +96,8 @@ namespace WarriorCraft {
             //if the strengths are equal...
             if (thisStrength == opponentStrength) {
                 cout << "Mutual Annihilation: "
-                    << name << " and " << opponent.getName()
-                    << " die at each other's hands" << endl;
+                     << name << " and " << opponent.getName()
+                     << " die at each other's hands" << endl;
                 dies();
                 opponent.dies();
                 setArmyStrength(ratio);
