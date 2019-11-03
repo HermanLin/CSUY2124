@@ -1,12 +1,9 @@
-FLAGS = -Wall -std=c++14
+FLAGS = -Wall -std=c++11
 
-all: hw07-orig hw07
-
-hw07-orig: hw07-orig.cpp
-	g++ ${FLAGS} -o hw07-orig hw07-orig.cpp
+all: hw07
 
 hw07:
 	g++ ${FLAGS} -o hw07 hw07.cpp
 
 clear:
-	rm -f hw07-orig hw07
+	rm -f hw07
