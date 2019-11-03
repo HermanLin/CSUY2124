@@ -16,9 +16,7 @@ class Protectors;
 //==========================//
 class Nobles {
 public:
-    Nobles (const string& name)
-        : name(name)
-    {}
+    Nobles (const string&);
 protected: //Protectors do not need to have access to these methods
     bool isDead() const;
 private:
@@ -136,3 +134,5 @@ int main() {
     // sam.battle(barclay);	
     // joe.battle(barclay);
 }
+
+//Nobles::Nobles (const string& name) : name(name) {}
