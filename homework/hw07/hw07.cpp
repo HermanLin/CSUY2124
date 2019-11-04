@@ -26,9 +26,6 @@ public:
     virtual double getStrength() const = 0;
     virtual void setStrength(const double) = 0;
 
-    unsigned getNobleType();
-    void setNobleType(unsigned);
-
     void battle(Nobles&);
     void defeats(Nobles&, const double);
 
