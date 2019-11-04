@@ -4,14 +4,7 @@
 */
 
 #include "Nobles.h"
-#include "Lord.h"
-#include "PersonWithStrengthToFight.h"
 #include "Protectors.h"
-#include "Wizard.h"
-#include "Warriors.h"
-#include "Archer.h"
-#include "Swordsman.h"
-
 #include <iostream>
 #include <string>
 #include <vector>
