@@ -25,6 +25,14 @@ public:
 
     virtual double getStrength() const = 0;
     virtual void setStrength(const double) = 0;
+
+    unsigned getNobleType();
+    void setNobleType(unsigned);
+
+    void battle(Nobles&);
+    void defeats(Nobles&, const double);
+
+    virtual void battleCry() = 0;
 private:
     string name;
     bool dead;
@@ -43,6 +51,8 @@ public:
     bool hires(Protectors&);
     bool fires(Protectors&);
     size_t findProtector(Protectors&);
+
+    void battleCry();
 private:
     vector<Protectors*> army;
 };
@@ -128,7 +138,6 @@ public:
 /* TESTER CODE */
 //=============//
 int main() {
-    cout << "testing" << endl;
     Lord sam("Sam");
     Archer samantha("Samantha", 200);
     sam.hires(samantha);
@@ -136,30 +145,30 @@ int main() {
     Lord joe("Joe");
     PersonWithStrengthToFight randy("Randolf the Elder", 250); 	
 
-    // joe.battle(randy);	
-    // joe.battle(sam);	
+    joe.battle(randy);	
+    joe.battle(sam);	
 
-    // Lord janet("Janet");	
-    // Swordsman hardy("TuckTuckTheHardy", 100);
-    // Swordsman stout("TuckTuckTheStout", 80);
-    // janet.hires(hardy);	
-    // janet.hires(stout);	
+    Lord janet("Janet");	
+    Swordsman hardy("TuckTuckTheHardy", 100);
+    Swordsman stout("TuckTuckTheStout", 80);
+    janet.hires(hardy);	
+    janet.hires(stout);	
 
-    // PersonWithStrengthToFight barclay("Barclay the Bold", 300);	
-    // janet.battle(barclay);	
-    // janet.hires(samantha);	
+    PersonWithStrengthToFight barclay("Barclay the Bold", 300);	
+    janet.battle(barclay);	
+    janet.hires(samantha);	
 
-    // Archer pethora("Pethora", 50);	
-    // Archer thora("Thorapleth", 60);
-    // Wizard merlin("Merlin", 150);
+    Archer pethora("Pethora", 50);	
+    Archer thora("Thorapleth", 60);
+    Wizard merlin("Merlin", 150);
 
-    // janet.hires(pethora);
-    // janet.hires(thora);
-    // sam.hires(merlin);
+    janet.hires(pethora);
+    janet.hires(thora);
+    sam.hires(merlin);
     
-    // janet.battle(barclay);	
-    // sam.battle(barclay);	
-    // joe.battle(barclay);
+    janet.battle(barclay);	
+    sam.battle(barclay);	
+    joe.battle(barclay);
 }
 
 //============================//
@@ -174,6 +183,65 @@ const string& Nobles::getName() const { return name; }
 bool Nobles::isDead() const { return dead; }
 
 void Nobles::dies() { dead = true; }
+
+void Nobles::battle(Nobles& opponent) {
+    cout << name << " battles " << opponent.getName() << endl;
+    
+    // if either Noble is dead...
+    if (dead || opponent.isDead()) {
+        // if both Nobles are dead...
+        if (dead && opponent.isDead()) {
+            cout << "Oh NO! They're both dead! Yuck!" << endl;
+        }
+        // if this Noble is dead...
+        else if (dead) {
+            cout << "He's dead, " << opponent.getName() << endl;
+        }
+        // if opponent is dead...
+        else {
+            cout << "He's dead, " << name << endl;
+        }
+    }
+    else {
+        // print out respective battlecries...
+        battleCry();
+        opponent.battleCry();
+
+        // get the strength of each Noble (army or self)
+        double thisStrength = getStrength();
+        double opponentStrength = opponent.getStrength();
+        // and set the default ratio to 1
+        double ratio = 1;
+
+        // if the strengths are equal...
+        if (thisStrength == opponentStrength) {
+            cout << "Mutual Annihilation: "
+                 << name << " and " << opponent.getName()
+                 << " die at each other's hands" << endl;
+            dies();
+            opponent.dies();
+            setStrength(ratio);
+            opponent.setStrength(ratio);
+        }
+        // if this Noble is stronger...
+        else if (thisStrength > opponentStrength) {
+            ratio = opponentStrength / thisStrength;
+            defeats(opponent, ratio);
+        }
+        // if the opponent is stronger...
+        else {
+            ratio = thisStrength / opponentStrength;
+            opponent.defeats(*this, ratio);
+        }
+    }
+}
+
+void Nobles::defeats(Nobles& opponent, const double ratio) {
+    cout << name << " defeats " << opponent.getName() << endl;
+    setStrength(ratio);
+    opponent.dies();
+    opponent.setStrength(1);
+}
 
 //==========================//
 /* LORD CLASS FUNCTIONALITY */
@@ -239,6 +307,12 @@ size_t Lord::findProtector(Protectors& protector) {
         }
     }
     return army.size();
+}
+
+void Lord::battleCry() {
+    for (Protectors* protector : army) {
+        protector->battleCry();
+    }
 }
 
 //===============================================//
