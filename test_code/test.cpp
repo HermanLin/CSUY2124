@@ -214,7 +214,8 @@ void someFunc(Base& argA, Base& argB) {
 
 int main() {
     Derived der;
-    someFunc(der, der);
+    Base base;
+    someFunc(base, der);
 } */
 
 /* ==================================================================== */
@@ -428,12 +429,12 @@ private:
 
 /* class Parent {
 public:
-   void foo() { cout << "Parent\n"; }
+   virtual void foo() { cout << "Parent\n"; }
 };
 
 class Child : public Parent {
 public:
-    virtual void foo() { cout << "Child\n"; }
+    void foo() { cout << "Child\n"; }
 };
 
 class GrandChild : public Child {
@@ -442,8 +443,9 @@ public:
 };
 
 int main() {
-    // GrandChild gc;
+    GrandChild gc;
     Child* cp = new GrandChild();
+    // Child* cp = &gc;
     // gc.foo();
     cp->foo();
 } */
@@ -451,7 +453,7 @@ int main() {
 /* ==================================================================== */
 /* ==================================================================== */
 
-class Dragon {};
+/* class Dragon {};
 class Elder {
 public:
     Elder (const string& rC) {}
@@ -509,4 +511,4 @@ public:
 private:
     string name;
     vector<Dragon*> dragons;
-};
+}; */
