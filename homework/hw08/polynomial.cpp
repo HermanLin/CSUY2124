@@ -4,7 +4,9 @@
 using namespace std;
 
 struct Node {
-
+    Node(int data = 0, Node* next = nullptr) : data(data), next(next) {}
+    int data;
+    Node* next;
 };
 
 class Polynomial {
@@ -92,9 +94,9 @@ int main() {
 /* POLYNOMIAL FUNCTIONALITY */
 /* ======================== */
 
-Polynomial::Polynomial (vector<int> coeffs) 
-    : coefficients(coeffs)
-{}
+Polynomial::Polynomial (vector<int> coeffs) {
+    
+}
 
 ostream& operator<<(ostream& os, const Polynomial poly) {
     return os;
