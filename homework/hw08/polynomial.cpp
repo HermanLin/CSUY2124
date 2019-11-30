@@ -11,19 +11,27 @@ struct Node {
 
 class Polynomial {
     friend ostream& operator<<(ostream&, const Polynomial);
+    friend bool operator==(const Polynomial&, const Polynomial&);
 private:
     Node* coeffPtr;
     int degree;
 public:
     Polynomial (vector<int>);
 
-    /* overloaded operators */
-    // unary
-    Polynomial& operator+=(const Polynomial& rhs);
-    bool operator!=(const Polynomial& rhs);
-    // binary
+    /* copy control */
+    // Polynomial (const Polynomial&);
+    // Polynomial& operator=(const Polynomial&);
+    // ~Polynomial();
+
+    /* overloaded unary operator */
+    // Polynomial& operator+=(const Polynomial&);
 };
 
+/* overloaded binary operators */
+// Polynomial operator+(const Polynomial&, const Polynomial&);
+bool operator!=(const Polynomial&, const Polynomial&);
+
+/* doNothing */
 // void doNothing(Polynomial temp) {}
 
 int main() {
@@ -34,21 +42,30 @@ int main() {
     Polynomial p3({-1, 5});              // -1x + 5
     Polynomial p4({5, 4, 3, 2, 1});      // 5x^4 + 4x^3 + 3x^2 + 2x + 1
     Polynomial has_a_zero({4, 0, 1, 7}); // 4x^3 + x + 7
-    Polynomial leading_zeros({0, 0, 2}); // 2
+    Polynomial has_leading_zeros({0, 0, 2}); // 2
+
+    Polynomial p4_1({5,4,3,2,1});
+    Polynomial p4_2({5,4,3,1,2});
 	
     cout << "p1: " << p1 << endl;
     cout << "p2: " << p2 << endl;
     cout << "p3: " << p3 << endl;
     cout << "p4: " << p4 << endl;
     cout << "has_a_zero: " << has_a_zero << endl;
-    cout << "leading_zeros: " << leading_zeros << endl;
+    cout << "has_leading_zeros: " << has_leading_zeros << endl;
+
+    cout << "===================" << endl;
+    cout << "evaluating p4 == p4_1: " << (p4 == p4_1) << endl;
+    cout << "evaluating p4 == p4_2: " << (p4 == p4_2) << endl;
+    cout << "evaluating p4 != p4_1: " << (p4 != p4_1) << endl;
+    cout << "evaluating p4 != p4_2: " << (p4 != p4_2) << endl;
     // cout << "p2 + p3: " << (p2+p3) << endl; 
     // cout << "p2 + p4: " << (p2+p4) << endl; 
     // cout << "p4 + p2: " << (p4+p2) << endl;
 
 
     // //test copy constructor - the statement below uses the copy constructor
-    // //to initialize poly3 with the same values as poly4
+    // //to initialize poly5 with the same values as poly4
     // Polynomial p5(p4);
     // p5 += p3;
     // cout << "Polynomial p5(p4);\n"
@@ -119,6 +136,28 @@ Polynomial::Polynomial (vector<int> coeffs) {
         ptr->next = new Node(coeffs[index]);
         ptr = ptr->next;
     }
+}
+
+// Polynomial operator+(const Polynomial& lhs, const Polynomial& rhs) {
+
+// }
+
+bool operator!=(const Polynomial& lhs, const Polynomial& rhs) {
+    return !(lhs == rhs);
+}
+
+bool operator==(const Polynomial& lhs, const Polynomial& rhs) {
+    // check for same degree polynomial
+    if (lhs.degree != rhs.degree) return false;
+    Node* lhsPtr = lhs.coeffPtr;
+    Node* rhsPtr = rhs.coeffPtr;
+    // if any of the coefficients are not equal, return false
+    while (lhsPtr) {
+        if (lhsPtr->data != rhsPtr->data) return false;
+        lhsPtr = lhsPtr->next;
+        rhsPtr = rhsPtr->next;
+    }
+    return true;
 }
 
 ostream& operator<<(ostream& os, const Polynomial poly) {
