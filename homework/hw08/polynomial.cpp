@@ -16,6 +16,12 @@ private:
     int degree;
 public:
     Polynomial (vector<int>);
+
+    /* overloaded operators */
+    // unary
+    Polynomial& operator+=(const Polynomial& rhs);
+    bool operator!=(const Polynomial& rhs);
+    // binary
 };
 
 // void doNothing(Polynomial temp) {}
@@ -28,12 +34,14 @@ int main() {
     Polynomial p3({-1, 5});              // -1x + 5
     Polynomial p4({5, 4, 3, 2, 1});      // 5x^4 + 4x^3 + 3x^2 + 2x + 1
     Polynomial has_a_zero({4, 0, 1, 7}); // 4x^3 + x + 7
+    Polynomial leading_zeros({0, 0, 2}); // 2
 	
     cout << "p1: " << p1 << endl;
     cout << "p2: " << p2 << endl;
     cout << "p3: " << p3 << endl;
     cout << "p4: " << p4 << endl;
     cout << "has_a_zero: " << has_a_zero << endl;
+    cout << "leading_zeros: " << leading_zeros << endl;
     // cout << "p2 + p3: " << (p2+p3) << endl; 
     // cout << "p2 + p4: " << (p2+p4) << endl; 
     // cout << "p4 + p2: " << (p4+p2) << endl;
@@ -94,12 +102,19 @@ int main() {
 /* POLYNOMIAL FUNCTIONALITY */
 /* ======================== */
 
-Polynomial::Polynomial (vector<int> coeffs) : degree(coeffs.size() - 1) {
-    int index = coeffs.size() - 1; // last index
-    coeffPtr = new Node(coeffs[index]); // first node is last coeff
+Polynomial::Polynomial (vector<int> coeffs) {
+    // clean leading zeros before processing Polynomial Linked List
+    int highestNonZero = 0;
+    while (coeffs[highestNonZero] == 0) ++highestNonZero;
+    // set the degree of the polynomial
+    degree = coeffs.size() - 1 - highestNonZero;
+    // index = last index of coeffs
+    int index = coeffs.size() - 1;
+    // first node of linked list is last coeff
+    coeffPtr = new Node(coeffs[index]);
     Node* ptr = coeffPtr;
     // loop through coeffs backwards, adding nodes to the linked list
-    while (index) {
+    while (index != highestNonZero) {
         --index;
         ptr->next = new Node(coeffs[index]);
         ptr = ptr->next;
