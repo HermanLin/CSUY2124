@@ -11,11 +11,13 @@ struct Node {
 
 class Polynomial {
     friend ostream& operator<<(ostream&, const Polynomial);
-public:
-    Polynomial (vector<int>);
 private:
     Node* coefficient;
     int degree;
+public:
+    Polynomial (vector<int>);
+
+    
 };
 
 // void doNothing(Polynomial temp) {}
@@ -94,10 +96,19 @@ int main() {
 /* POLYNOMIAL FUNCTIONALITY */
 /* ======================== */
 
-Polynomial::Polynomial (vector<int> coeffs) {
-    
+Polynomial::Polynomial (vector<int> coeffs) : degree(coeffs.size() - 1) {
+    coefficient = new Node(coeffs[0]);
+    Node* ptr = coefficient;
+    for (size_t i = coeffs.size() - 1; i > 1; --i) {
+        ptr->next = new Node(coeffs[i]);
+        ptr = ptr->next;
+    }
 }
 
 ostream& operator<<(ostream& os, const Polynomial poly) {
+    Node* ptr = poly.coefficient;
+    while (ptr) {
+
+    }
     return os;
 }
