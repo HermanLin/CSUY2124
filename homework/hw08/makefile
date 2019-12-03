@@ -1,9 +1,9 @@
 FLAGS = -Wall -std=c++11
 
-all: polynomial
+all: hw08
 
-polynomial: polynomial.cpp
-	g++ ${FLAGS} -o polynomial polynomial.cpp
+hw08: hw08.cpp polynomial.cpp polynomial.h 
+	g++ ${FLAGS} -o hw08 hw08.cpp polynomial.cpp
 
 clean:
-	rm -f polynomial
+	rm -f hw08
