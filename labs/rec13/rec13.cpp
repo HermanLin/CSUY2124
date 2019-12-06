@@ -326,5 +326,8 @@ int main() {
         for (int i : pair.second) cout << i << ' ';
         cout << '>' << endl;
     }
+
+    file.close();
+
     cout << "=======\n";
 }
